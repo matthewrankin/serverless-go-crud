@@ -1,24 +1,62 @@
 service: serverless-go-crud
 
+custom:
+  todosTableName: ${self:service}-${self:provider.stage}-todos
+  todosTableArn: # ARNs are addresses of deployed services in AWS space
+    Fn::Join:
+    - ":"
+    - - arn
+      - aws
+      - dynamodb
+      - Ref: AWS::Region
+      - Ref: AWS::AccountId
+      - table/${self:custom.todosTableName}
+
 provider:
   name: aws
   runtime: go1.x
   stage: dev
-  region: ap-southeast-1
+  region: us-east-2
+  environment:
+    TODOS_TABLE_NAME: ${self:custom.todosTableName}
+  iamRoleStatements: # Defines what other AWS services our lambda function can access
+    - Effect: Allow # Allow access to DynamoDB tables
+      Action:
+        - 'dynamodb:Scan'
+        - 'dynamodb:GetItem'
+        - 'dynamodb:PutItem'
+        - 'dynamodb:UpdateItem'
+        - 'dynamodb:DeleteItem'
+      Resource:
+        - ${self:custom.todosTableArn}
 
 package:
- individually: true
- exclude:
-   - ./**
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
 
 functions:
-  hello:
-    handler: bin/handlers/addTodo
-    package:
-     include:
-       - ./bin/handlers/addTodo
+  addtodo:
+    handler: bin/handlers/addtodo
     events:
       - http:
           path: todos
           method: post
           cors: true
+
+resources:
+  Resources: # Support AWS services
+    TodosTable: # Define a new DynamoDB Table resource to store todo items
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.todosTableName}
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
