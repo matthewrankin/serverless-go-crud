@@ -22,8 +22,13 @@ I made a few changes/deviations from [Yos Riady's example app][3]:
 - Instead of using individual package includes in `serverless.yml`,
   include `./bin/**`.
 
+## License
+
+`serverless-go-crud` is released under the MIT license. Please see the
+[LICENSE][] file for more information.
+
 [1]: https://serverless.com
 [2]: https://leanpub.com/serverless-go
 [3]: https://github.com/yosriady/serverless-crud-go
-[dep2mod]:
-https://blog.callr.tech/migrating-from-dep-to-go-1.11-modules/
+[dep2mod]: https://blog.callr.tech/migrating-from-dep-to-go-1.11-modules/
+[LICENSE]: https://github.com/matthewrankin/serverless-go-crod/blob/master/LICENSE
