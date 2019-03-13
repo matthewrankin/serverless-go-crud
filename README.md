@@ -1,39 +1,29 @@
-# Serverless Go Boilerplate
+# Serverless Go CRUD
 
-## Prerequisites
+This is an example Go CRUD application deployed to AWS using the
+[serverless framework][1] based on [Yos Riady's example][3] in his book
+[*A Practical Guide to Serverless Go.*][2]
 
-- [Node.js & NPM](https://github.com/creationix/nvm)
-- [Serverless framework](https://serverless.com/framework/docs/providers/aws/guide/installation/): `npm install -g serverless`
-- [Go](https://golang.org/dl/)
-- [dep](https://github.com/golang/dep): `brew install dep && brew upgrade dep`
+## Build and Deploy
 
-## Quick Start
-
-0. Clone the repo
-
-```
-git clone git@github.com:yosriady/serverless-go-boilerplate.git
-cd serverless-go-boilerplate
+```bash
+$ make deploy
 ```
 
-1. Install Go dependencies
+## Changes from Yos Riady's Example
 
-```
-dep ensure
-```
+I made a few changes/deviations from [Yos Riady's example app][3]:
 
-2. Compile functions as individual binaries for deployment package:
+- Migrated from `dep` to `mod` using [these instructions][dep2mod].
+- Replaced `./scripts/build.sh` and `./scripts/deploy.sh` with a
+  `Makefile`.
+- Moved handlers into separate directories so that multiple, different
+  `main` package files weren't in the same directory.
+- Instead of using individual package includes in `serverless.yml`,
+  include `./bin/**`.
 
-```
-./scripts/build.sh
-```
-
-> You need to perform this compilation step before deploying.
-
-3. Deploy!
-
-```
-serverless deploy
-```
-
-> You can perform steps 2 and 3 simultaneously by running `./scripts/deploy.sh`.
+[1]: https://serverless.com
+[2]: https://leanpub.com/serverless-go
+[3]: https://github.com/yosriady/serverless-crud-go
+[dep2mod]:
+https://blog.callr.tech/migrating-from-dep-to-go-1.11-modules/
