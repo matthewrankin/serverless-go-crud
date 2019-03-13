@@ -13,6 +13,7 @@ build: cleanbin
 	$(GOBUILD) bin/addtodo src/handlers/addtodo/main.go
 	$(GOBUILD) bin/listtodos src/handlers/listtodos/main.go
 	$(GOBUILD) bin/completetodo src/handlers/completetodo/main.go
+	$(GOBUILD) bin/deletetodo src/handlers/deletetodo/main.go
 
 check:
 	@echo 'Formatting, linting, vetting, and testing Go code.'
