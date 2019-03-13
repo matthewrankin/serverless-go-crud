@@ -38,11 +38,18 @@ package:
 
 functions:
   addtodo:
-    handler: bin/handlers/addtodo
+    handler: bin/addtodo
     events:
       - http:
           path: todos
           method: post
+          cors: true
+  listtodos:
+    handler: bin/listtodos
+    events:
+      - http:
+          path: todos
+          method: get
           cors: true
 
 resources:
