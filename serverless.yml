@@ -51,6 +51,13 @@ functions:
           path: todos
           method: get
           cors: true
+  completetodo:
+    handler: bin/completetodo
+    events:
+      - http:
+          path: todos/{id}
+          method: patch
+          cors: true
 
 resources:
   Resources: # Support AWS services

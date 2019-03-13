@@ -12,6 +12,7 @@ build: cleanbin
 	export GO111MODULE=on
 	$(GOBUILD) bin/addtodo src/handlers/addtodo/main.go
 	$(GOBUILD) bin/listtodos src/handlers/listtodos/main.go
+	$(GOBUILD) bin/completetodo src/handlers/completetodo/main.go
 
 check:
 	@echo 'Formatting, linting, vetting, and testing Go code.'
